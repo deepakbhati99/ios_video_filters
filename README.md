@@ -5,6 +5,6 @@ you'll also learn to implement MPMovieplayercontroller.
 GPUImage moviewriter writes the the video to destination path after applying the Filters.
 
 
-
+# SCREENSHOT
 ![Alt text](https://github.com/deepakbhati99/ios_video_filters/blob/master/SCREENSHOT_IMG_3301.PNG "Screeshot #1")
 ![Alt text](https://github.com/deepakbhati99/ios_video_filters/blob/master/SCREENSHOT_IMG_3302.PNG "Screeshot #2")
