@@ -6,3 +6,4 @@ GPUImage moviewriter writes the the video to destination path after applying the
 
 
 
+![Alt text](https://github.com/deepakbhati99/ios_video_filters/blob/master/SCREENSHOT_IMG_3301.PNG "ScreeShot #1")
