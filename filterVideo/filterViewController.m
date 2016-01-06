@@ -362,23 +362,23 @@
         self.showLoading=YES;
         _movieFile = [[GPUImageMovie alloc] initWithURL:originalFileUrl];
         
-        self.videoFilter=[self filter:filterNumber];
+        self.videoFilter=[self filter:filterNumber]; // get selected filter
         _movieFile.runBenchmark = YES;
         _movieFile.playAtActualSpeed = YES;
         [_movieFile addTarget:_videoFilter];
         
         //Setting path for temporary storing the video in document directory
-        NSURL *movieURL = [self dataFilePath:@"tempVideo.mp4"];
-        //getting 
+        NSURL *movieURL = [self dataFilePath:@"tempVideo.mp4"]; // url where we want to save our new edited video
+        
+        //getting
         CGSize size =[self getVideoResolution:originalFileUrl];
         
         self.movieWriter = [[GPUImageMovieWriter alloc] initWithMovieURL:movieURL size:size];
         
         [_videoFilter addTarget:_movieWriter];
+        
+        // this let allow gpumoviewriter to handle the audio. if not used the resulted video is without audio.
         _movieWriter.shouldPassthroughAudio = YES;
-        
-        
-        
         _movieFile.audioEncodingTarget = _movieWriter;
         
         [_movieFile enableSynchronizedEncodingUsingMovieWriter:_movieWriter];
@@ -388,20 +388,29 @@
         
         __block BOOL completeRec = NO;
         __unsafe_unretained typeof(self) weakSelf = self;
+        
+        //completion block video editing completed and this block is called.
         [self.movieWriter setCompletionBlock:^{
             
             [weakSelf.videoFilter removeTarget:weakSelf.movieWriter];
             [weakSelf.movieWriter finishRecording];
             [weakSelf.movieFile removeTarget:weakSelf.videoFilter];
+            
             if (!completeRec)
             {
+                // playing our new filtered video
                 [weakSelf performSelectorOnMainThread:@selector(playTheVideo:) withObject:movieURL waitUntilDone:NO];
+                
                 completeRec = YES;
             }
         }];
     }
 }
 
+
+
+// to get the exact video resolution of original video.
+// video quality is maintained
 -(CGSize)getVideoResolution:(NSURL *)fileURL{
     
     AVAssetTrack *videoTrack = nil;
